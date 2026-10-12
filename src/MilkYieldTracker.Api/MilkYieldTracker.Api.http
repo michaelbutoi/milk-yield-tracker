@@ -1,0 +1,44 @@
+@host = http://localhost:5099
+
+### Which cows should I look at today? (herd-wide check)
+GET {{host}}/api/alerts/yield-drops
+
+### Same check for a specific day
+GET {{host}}/api/alerts/yield-drops?date=2026-10-12
+
+### List the herd
+GET {{host}}/api/cows
+
+### Why was one cow judged the way she was? (shows litres, baseline and drop %)
+GET {{host}}/api/cows/1/yield-check
+
+### Add a cow
+POST {{host}}/api/cows
+Content-Type: application/json
+
+{
+  "tagNumber": "0107",
+  "name": "Pearl"
+}
+
+### Record a milking (Period is "Morning" or "Evening")
+POST {{host}}/api/cows/1/sessions
+Content-Type: application/json
+
+{
+  "date": "2026-10-11",
+  "period": "Morning",
+  "litres": 13.2
+}
+
+### Read a cow's milkings (defaults to the last 14 days)
+GET {{host}}/api/cows/1/sessions
+
+### Mark a cow inactive (sold or culled): she is left out of the alerts
+PUT {{host}}/api/cows/1
+Content-Type: application/json
+
+{
+  "name": "Daisy",
+  "isActive": false
+}
