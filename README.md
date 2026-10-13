@@ -75,8 +75,4 @@ Two bugs were found by these tests while building it: record validation attribut
 
 ## Built with AI assistance
 
-Most of this project was written by Claude (Anthropic's AI assistant) in a chat session with me, and the commit history carries a `Co-Authored-By` line for that reason.
-
-- **Claude wrote** the API code, the database model, the README and 24 of the 25 tests, and made the design decisions listed above.
-- **I chose** the project (a rebuild of my 2024 Excel tracker) and agreed the rule's starting values (15% below a 7-day average) and the database (SQL Server).
-- **I also** went through the main rule file (`YieldDropDetector.cs`) with Claude, deliberately changed its `>` to `>=` to see which test catches it, and wrote one test myself (`A_drop_just_below_the_threshold_is_not_flagged`).
+I chose this project, set its starting rules (15% below a 7-day average) and picked the database, then built it with Claude (Anthropic's AI assistant) as my coding assistant, which wrote most of the code and tests. I went through the main rule file with it, tested it by deliberately breaking the comparison, and wrote a boundary test of my own. The commit history carries a `Co-Authored-By` line for Claude.
