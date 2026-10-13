@@ -55,6 +55,18 @@ public class YieldDropDetectorTests
     }
 
     [Fact]
+    public void A_drop_just_below_the_threshold_is_not_flagged()
+    {
+        var days = History(20m);
+        days[Day] = new DailyYield(17.2m, 2); // 14% down; just under the 15% threshold
+
+        var result = CreateDetector().Evaluate(days, Day);
+
+        Assert.Equal(YieldStatus.Normal, result.Status);
+        Assert.Equal(14.0m, result.DropPercent);
+    }
+
+    [Fact]
     public void A_higher_yield_than_usual_is_normal()
     {
         var days = History(20m);

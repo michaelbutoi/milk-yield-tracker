@@ -61,7 +61,7 @@ Validation covers duplicate ear tags, litres outside 0.1-60 per milking, future 
 dotnet test
 ```
 
-24 tests: 12 on the rule itself (thresholds, boundaries, missing and half-recorded days, zero baseline) and 12 end-to-end tests that send real HTTP requests to the API. The end-to-end tests use an in-memory SQLite database, so they need no server and cannot touch real data. The app itself targets SQL Server, and was also run against SQL Server Express to confirm the migration, demo data and alerts work there.
+25 tests: 13 on the rule itself (thresholds, boundaries, missing and half-recorded days, zero baseline) and 12 end-to-end tests that send real HTTP requests to the API. The end-to-end tests use an in-memory SQLite database, so they need no server and cannot touch real data. The app itself targets SQL Server, and was also run against SQL Server Express to confirm the migration, demo data and alerts work there.
 
 Two bugs were found by these tests while building it: record validation attributes were attached in a way ASP.NET Core rejects, and milking periods (stored as text) sorted alphabetically, putting Evening before Morning.
 
@@ -75,4 +75,8 @@ Two bugs were found by these tests while building it: record validation attribut
 
 ## Built with AI assistance
 
-The code, tests and this README were written by Claude (Anthropic's AI assistant) in a chat session with me, and the commit history carries a `Co-Authored-By` line for that reason. I chose the project and agreed the rule's starting values (15% below a 7-day average) and the database (SQL Server). Claude made the other design decisions listed above while building it.
+Most of this project was written by Claude (Anthropic's AI assistant) in a chat session with me, and the commit history carries a `Co-Authored-By` line for that reason.
+
+- **Claude wrote** the API code, the database model, the README and 24 of the 25 tests, and made the design decisions listed above.
+- **I chose** the project (a rebuild of my 2024 Excel tracker) and agreed the rule's starting values (15% below a 7-day average) and the database (SQL Server).
+- **I also** went through the main rule file (`YieldDropDetector.cs`) with Claude, deliberately changed its `>` to `>=` to see which test catches it, and wrote one test myself (`A_drop_just_below_the_threshold_is_not_flagged`).
